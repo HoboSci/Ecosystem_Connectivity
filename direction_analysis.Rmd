@@ -1,0 +1,195 @@
+---
+title: "ecosystem connectivity - direction analysis"
+output: html_notebook
+---
+
+xx
+
+```{r}
+data <- read.csv("~/GitHub/ecosystem_conn/Data/direction_analysis.csv", header = TRUE)
+```
+ok first remove the excluded studies
+```{r}
+head(data)
+colnames(data)
+```
+so the rows you want to exclude are under "Include..Y..N..M"
+
+First you want to make this column is characters and not soome other wierd thing
+
+```{r}
+str(data$Include..Y..N..M) #its a factor with 8 levels...
+data$Include..Y..N..M <- as.character(data$Include..Y..N..M)
+```
+ok now check for unique values (the responses may be in different formats)
+
+```{r}
+uniqueinc <- unique(data$Include..Y..N..M)
+uniqueinc
+```
+ok so.. 
+Y and y need to be merged to y
+N and No and n and no need to be merged to n
+M and R need to be merged to m
+
+```{r}
+data$Include..Y..N..M <- replace(data$Include..Y..N..M, data$Include..Y..N..M == "Y", "y")
+data$Include..Y..N..M <- replace(data$Include..Y..N..M, data$Include..Y..N..M == "N", "n")
+data$Include..Y..N..M <- replace(data$Include..Y..N..M, data$Include..Y..N..M == "No", "n")
+data$Include..Y..N..M <- replace(data$Include..Y..N..M, data$Include..Y..N..M == "no", "n")
+data$Include..Y..N..M <- replace(data$Include..Y..N..M, data$Include..Y..N..M == "R", "m")
+data$Include..Y..N..M <- replace(data$Include..Y..N..M, data$Include..Y..N..M == "M", "m")
+```
+and recheck...
+```{r}
+uniqueinc <- unique(data$Include..Y..N..M)
+uniqueinc
+```
+perfect
+
+Now subset just to have all the y
+```{r}
+ydata <- data[data$Include..Y..N..M == "y",]
+```
+ok now out of interest count how many n there were
+```{r}
+ynm <- count(data, 'Include..Y..N..M') 
+ynm
+```
+ok back to the included data..
+let's get the study location info
+
+
+```{r}
+uniquelocations <- unique(ydata$Study.location)
+uniquelocations
+```
+
+ok lots of variation... we just want countries really... 
+let's start by adding a new column called Country
+```{r}
+ydata$country <- format(as.character) #created a new column called country
+colnames(ydata)
+```
+ok great... now need to figure out how to populate it...
+lets start by populating with the locations as is
+```{r}
+ydata$country <- ydata$Study.location
+ydata$country <- as.character(ydata$country)
+head(ydata)
+```
+ok good now lets start replacing values so you only get country names
+
+```{r}
+ydata$country <- replace(ydata$country, ydata$country == "Western coast of Norway", "Norway")
+ydata$country <- replace(ydata$country, ydata$country == "NW coast Spain", "Spain")
+ydata$country <- replace(ydata$country, ydata$country == "SE Australia", "Australia")
+ydata$country <- replace(ydata$country, ydata$country == "SE Argentina", "Argentina")
+ydata$country <- replace(ydata$country, ydata$country == "NE Spain", "Spain")
+ydata$country <- replace(ydata$country, ydata$country == "North Carolina, USA", "USA")
+ydata$country <- replace(ydata$country, ydata$country == "South Australia", "Australia")
+ydata$country <- replace(ydata$country, ydata$country == "South-west Australia", "Australia")
+ydata$country <- replace(ydata$country, ydata$country == "SE Australia", "Australia")
+ydata$country <- replace(ydata$country, ydata$country == "North Island, New Zealand", "New Zealand")
+ydata$country <- replace(ydata$country, ydata$country == "British Columbia, Canada", "Canada")
+ydata$country <- replace(ydata$country, ydata$country == "Nova Scotia, Canada", "Canada")
+ydata$country <- replace(ydata$country, ydata$country == "Grosetto, Italy", "Italy")
+ydata$country <- replace(ydata$country, ydata$country == "Central California", "USA")
+ydata$country <- replace(ydata$country, ydata$country == "South west Australia", "Australia")
+ydata$country <- replace(ydata$country, ydata$country == "Southeast US", "USA")
+ydata$country <- replace(ydata$country, ydata$country == "Massachusetts, USA", "USA")
+ydata$country <- replace(ydata$country, ydata$country == "Cape Breton Island, Nova Scotia", "Canada")
+ydata$country <- replace(ydata$country, ydata$country == "Northwestern Vancouver Island, British Columbia", "Canada")
+ydata$country <- replace(ydata$country, ydata$country == "Puget Sound, Washington, USA", "USA")
+ydata$country <- replace(ydata$country, ydata$country == "NW Scotland", "Scotland")
+ydata$country <- replace(ydata$country, ydata$country == "SW Australia", "Australia")
+ydata$country <- replace(ydata$country, ydata$country == "Central Japan", "Japan")
+ydata$country <- replace(ydata$country, ydata$country == "Eastern Germany, Baltic Sea", "Germany")
+ydata$country <- replace(ydata$country, ydata$country == "Washington State, San Juan Archipelago", "USA")
+ydata$country <- replace(ydata$country, ydata$country == "Southern California and Mexico", "Mexico and USA")
+ydata$country <- replace(ydata$country, ydata$country == "Southern California and Southeast Spain", "USA and Spain")
+ydata$country <- replace(ydata$country, ydata$country == "western Australia", "Australia")
+ydata$country <- replace(ydata$country, ydata$country == "Western Australia", "Australia")
+ydata$country <- replace(ydata$country, ydata$country == "Washington State, USA", "USA")
+ydata$country <- replace(ydata$country, ydata$country == "West France", "France")
+ydata$country <- replace(ydata$country, ydata$country == "Chesapeake Bay, USA", "USA")
+ydata$country <- replace(ydata$country, ydata$country == "California, USA", "USA")
+ydata$country <- replace(ydata$country, ydata$country == "New England, USA", "USA")
+ydata$country <- replace(ydata$country, ydata$country == "Quebec ", "Canada")
+ydata$country <- replace(ydata$country, ydata$country == "New York, USA", "USA")
+ydata$country <- replace(ydata$country, ydata$country == "Washington State", "USA")
+ydata$country <- replace(ydata$country, ydata$country == "canada", "Canada")
+
+```
+ok let's check...
+```{r}
+uniquecountry <- unique(ydata$country)
+uniquecountry
+```
+ok so there are still some issues...
+USA and Spain
+Baltic Sea
+NW Mediteranean (Balearic basin)
+Sea of Okhotsk, Western Pacific Ocean
+France + UK
+Northwestern mediterranean
+Mexico and USA
+Northern Balearic Island
+""
+Meditteranean
+
+First lets count how many unique studies there are in each country... https://stackoverflow.com/questions/12840294/counting-unique-distinct-values-by-group-in-a-data-frame/12848190
+
+```{r}
+library(plyr)
+countrycount <- ddply(ydata,~country,summarise,country_count=length(unique(Authors)))
+countrycount
+
+```
+soo the counts for our trouble locations are...
+
+USA and Spain - 1 x
+Baltic Sea - 1
+NW Mediteranean (Balearic basin) - 1
+Sea of Okhotsk, Western Pacific Ocean - 1
+France + UK - 1 x
+Northwestern mediterranean - 1
+Mexico and USA - 1 x
+Northern Balearic Island - 1
+"" - 2
+Meditteranean - 1
+
+Ok soo all but the missing country studies have only one - this makes it a little easier
+For those joint country studies, lets just add 1 value to each individual country, and then remove the joint country entry
+
+
+```{r}
+countrycount$country_count[countrycount$country == "USA"] = countrycount$country_count[countrycount$country == "USA"] +1
+countrycount$country_count[countrycount$country == "Spain"] = countrycount$country_count[countrycount$country == "Spain"] +1
+countrycount <- countrycount[!(countrycount$country == "USA and Spain"), ]
+countrycount$country_count[countrycount$country == "USA"] = countrycount$country_count[countrycount$country == "USA"] +1
+countrycount$country_count[countrycount$country == "Mexico"] = countrycount$country_count[countrycount$country == "Mexico"] +1
+countrycount <- countrycount[!(countrycount$country == "Mexico and USA"), ]
+countrycount$country_count[countrycount$country == "France"] = countrycount$country_count[countrycount$country == "France"] +1
+countrycount$country_count[countrycount$country == "UK"] = countrycount$country_count[countrycount$country == "UK"] +1
+countrycount <- countrycount[!(countrycount$country == "France + UK"), ]
+countrycount
+
+```
+
+ok so now left is those that i need to go look at the papers...
+
+Baltic Sea - 1
+NW Mediteranean (Balearic basin) - 1
+Sea of Okhotsk, Western Pacific Ocean - 1
+Northwestern mediterranean - 1
+Northern Balearic Island - 1
+"" - 2
+Meditteranean - 1
+
+```{r}
+balticsea <- subset(ydata, country == "Baltic Sea", select = Title)
+balticsea
+
+```
+
