@@ -1,0 +1,43 @@
+---
+title: "Journals"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+journaldata <- read.csv("./Data/ecoconpapers.csv", header = TRUE)
+head(journaldata)
+```
+
+let's ee the unique journal names...
+```{r}
+journaldata$Journal <- as.character(journaldata$Journal)
+journals <- unique(journaldata$Journal)
+journals
+```
+ok a few duplicates here to merge....
+```{r}
+journaldata$Journal <- replace(journaldata$Journal, journaldata$Journal == "PLOS ONE", "PLoS ONE")
+journaldata$Journal <- replace(journaldata$Journal, journaldata$Journal == "Estuarine, Coastal and Shelf Science", "ESTUARINE COASTAL AND SHELF SCIENCE")
+journaldata$Journal <- replace(journaldata$Journal, journaldata$Journal == "ESTUARIES AND COASTS", "Estuaries and Coasts")
+journaldata$Journal <- replace(journaldata$Journal, journaldata$Journal == "Estuarine, coastal and shelf science", "ESTUARINE COASTAL AND SHELF SCIENCE")
+journals <- unique(journaldata$Journal)
+journals
+```
+ok now do a table of the frequency of each publication
+```{r}
+library(plyr) #need this package to run 'count'
+journalfreq <- count(journaldata, 'Journal') 
+journalfreq <- journalfreq[order(-journalfreq$freq), ] #this reorders in frequency descending order (note the -)
+journalfreq
+```
+ok let's export that table...
+
+```{r}
+write.csv(journalfreq, file = "./Data/journalspaperscamefrom.csv", row.names = FALSE)
+```
+
+
