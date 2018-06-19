@@ -6,8 +6,9 @@ output: html_notebook
 xx
 
 ```{r}
-data <- read.csv("~/GitHub/ecosystem_conn/Data/direction_analysis.csv", header = TRUE)
+data <- read.csv("~/GitHub/Ecosystem_Connectivity/Data/all_studies.csv", header = TRUE)
 ```
+
 ok first remove the excluded studies
 ```{r}
 head(data)
@@ -53,11 +54,259 @@ ydata <- data[data$Include..Y..N..M == "y",]
 ```
 ok now out of interest count how many n there were
 ```{r}
+library(plyr)
 ynm <- count(data, 'Include..Y..N..M') 
 ynm
 ```
-ok back to the included data..
-let's get the study location info
+and in the ydata (should be none)
+```{r}
+y <- count(ydata, 'Include..Y..N..M') 
+y
+```
+great
+
+ok save that ydata as a new .csv
+
+```{r}
+write.csv(ydata, file = "./data/all_yes_studies.csv", row.names = FALSE)
+```
+
+
+```{r}
+colnames(ydata)
+```
+
+So you can remove..
+"Include..Y..N..M"                                                                         
+"If.excluding..reason.for.exclusion"  
+ 
+```{r}
+ydata <- subset(ydata, select = -c(Include..Y..N..M, If.excluding..reason.for.exclusion))
+colnames(ydata)
+```
+
+ok now let's tidy each column...
+
+[6] "From.original.search..Y.or.N" 
+```{r}
+ydata$From.original.search..Y.or.N <- as.character(ydata$From.original.search..Y.or.N) #make col as.character
+orsea <- unique(ydata$From.original.search..Y.or.N)
+orsea
+```
+
+and tidy...
+```{r}
+ydata$From.original.search..Y.or.N <- replace(ydata$From.original.search..Y.or.N, ydata$From.original.search..Y.or.N == "Y", "y") #all Y will be y
+ydata$From.original.search..Y.or.N <- replace(ydata$From.original.search..Y.or.N, ydata$From.original.search..Y.or.N == "Y ", "y") #all Y will be y
+ydata$From.original.search..Y.or.N <- replace(ydata$From.original.search..Y.or.N, ydata$From.original.search..Y.or.N == "N", "n") #all N will be n
+```
+
+and check
+```{r}
+orsea1 <- unique(ydata$From.original.search..Y.or.N)
+orsea1
+```
+
+ok next column
+ [7] "Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem"
+```{r}
+ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem <- as.character(ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem) #make col as.character
+focus <- unique(ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem)
+focus
+```
+
+and tidy...
+```{r}
+ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem <- replace(ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem, ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem == "Subsidy", "subsidy") 
+
+ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem <- replace(ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem, ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem == "Both", "both")
+
+ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem <- replace(ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem, ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem == "Community", "community")
+
+ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem <- replace(ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem, ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem == "Subsidy & Community", "subsidy & community")
+
+ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem <- replace(ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem, ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem == "community & subsidy", "subsidy & community")
+
+ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem <- replace(ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem, ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem == "Subsidy and community", "subsidy & community")
+
+ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem <- replace(ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem, ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem == "subsidy and community", "subsidy & community")
+
+ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem <- replace(ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem, ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem == "", "subsidy") #i checked this
+```
+
+and check
+```{r}
+focus1 <- unique(ydata$Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem)
+focus1
+```
+
+next
+[8] "Study.Type" 
+```{r}
+ydata$Study.Type <- as.character(ydata$Study.Type) #make col as.character
+type <- unique(ydata$Study.Type)
+type
+```
+
+
+and tidy...
+```{r}
+ydata$Study.Type <- replace(ydata$Study.Type, ydata$Study.Type == "Observational", "observational") 
+
+ydata$Study.Type <- replace(ydata$Study.Type, ydata$Study.Type == "Manipulative", "manipulative") 
+
+ydata$Study.Type <- replace(ydata$Study.Type, ydata$Study.Type == "Observational & experiment", "observational & experiment") 
+
+ydata$Study.Type <- replace(ydata$Study.Type, ydata$Study.Type == "Modeling", "model")
+                            
+ydata$Study.Type <- replace(ydata$Study.Type, ydata$Study.Type == "Modelling", "model")
+                            
+ydata$Study.Type <- replace(ydata$Study.Type, ydata$Study.Type == "Laboratory", "lab")
+
+ydata$Study.Type <- replace(ydata$Study.Type, ydata$Study.Type == "observational + laboratory", "observational + lab") 
+                            
+ydata$Study.Type <- replace(ydata$Study.Type, ydata$Study.Type == "observational + laboratory", "observational + lab")  
+
+ydata$Study.Type <- replace(ydata$Study.Type, ydata$Study.Type == "Observational (but lab study completed too)", "observational + lab")                             
+
+ydata$Study.Type <- replace(ydata$Study.Type, ydata$Study.Type == "Observational/modelling", "observational + model")
+
+ydata$Study.Type <- replace(ydata$Study.Type, ydata$Study.Type == "Observational + Modelling", "observational + model")
+
+ydata$Study.Type <- replace(ydata$Study.Type, ydata$Study.Type == "Observational + model", "observational + model")
+
+ydata$Study.Type <- replace(ydata$Study.Type, ydata$Study.Type == "Observational + model", "observational + model")
+
+ydata$Study.Type <- replace(ydata$Study.Type, ydata$Study.Type == "", "observational + manipulative") #i checked this
+
+ydata$Study.Type <- replace(ydata$Study.Type, ydata$Study.Type == "observational & experiment", "observational + experiment") 
+
+```
+
+and check
+```{r}
+type1 <- unique(ydata$Study.Type)
+type1
+```
+
+next..
+[9] "Specific.Methodology.Used" 
+
+```{r}
+ydata$Specific.Methodology.Used <- as.character(ydata$Specific.Methodology.Used) #make col as.character
+meth <- unique(ydata$Specific.Methodology.Used)
+meth
+```
+eek ok lots here...but probably cant to doo much
+
+and tidy...
+```{r}
+ydata$Specific.Methodology.Used <- replace(ydata$Specific.Methodology.Used, ydata$Specific.Methodology.Used == "Transects", "transects") 
+
+ydata$Specific.Methodology.Used <- replace(ydata$Specific.Methodology.Used, ydata$Specific.Methodology.Used == "video transects", "transects")
+
+ydata$Specific.Methodology.Used <- replace(ydata$Specific.Methodology.Used, ydata$Specific.Methodology.Used == "transect collections", "transects")
+
+ydata$Specific.Methodology.Used <- replace(ydata$Specific.Methodology.Used, ydata$Specific.Methodology.Used == "transect", "transects")
+
+ydata$Specific.Methodology.Used <- replace(ydata$Specific.Methodology.Used, ydata$Specific.Methodology.Used == "Quadrat sampling", "quadrat")
+
+ydata$Specific.Methodology.Used <- replace(ydata$Specific.Methodology.Used, ydata$Specific.Methodology.Used == "quadrat sampling", "quadrat")
+
+ydata$Specific.Methodology.Used <- replace(ydata$Specific.Methodology.Used, ydata$Specific.Methodology.Used == "quadrats laid on transects", "quadrat")
+
+ydata$Specific.Methodology.Used <- replace(ydata$Specific.Methodology.Used, ydata$Specific.Methodology.Used == "transect with quadrat + invert sampling", "quadrat")
+
+ydata$Specific.Methodology.Used <- replace(ydata$Specific.Methodology.Used, ydata$Specific.Methodology.Used == "quadrat surveys; morphological assessments of kelp", "quadrat")
+  
+ydata$Specific.Methodology.Used <- replace(ydata$Specific.Methodology.Used, ydata$Specific.Methodology.Used == "Sediment analysis", "sediment analysis")
+
+ydata$Specific.Methodology.Used <- replace(ydata$Specific.Methodology.Used, ydata$Specific.Methodology.Used == "Nutrient analysis - water", "nutrient analysis")
+
+ydata$Specific.Methodology.Used <- replace(ydata$Specific.Methodology.Used, ydata$Specific.Methodology.Used == "Isotope analysis", "stable isotope analysis")
+
+ydata$Specific.Methodology.Used <- replace(ydata$Specific.Methodology.Used, ydata$Specific.Methodology.Used == "Stable Isotope Analysis", "stable isotope analysis")
+
+ydata$Specific.Methodology.Used <- replace(ydata$Specific.Methodology.Used, ydata$Specific.Methodology.Used == "Stable isotope analysis", "stable isotope analysis")
+
+ydata$Specific.Methodology.Used <- replace(ydata$Specific.Methodology.Used, ydata$Specific.Methodology.Used == "WATER sampling", "water sampling")
+
+ydata$Specific.Methodology.Used <- replace(ydata$Specific.Methodology.Used, ydata$Specific.Methodology.Used == "water quality sampling", "water sampling")
+
+ydata$Specific.Methodology.Used <- replace(ydata$Specific.Methodology.Used, ydata$Specific.Methodology.Used == "tagging of kelp", "tagging")
+
+ydata$Specific.Methodology.Used <- replace(ydata$Specific.Methodology.Used, ydata$Specific.Methodology.Used == "Marking fish and monitoring movement", "tagging")
+
+ydata$Specific.Methodology.Used <- replace(ydata$Specific.Methodology.Used, ydata$Specific.Methodology.Used == "", "quadrat") #i checked this one
+```
+
+and check
+```{r}
+meth1 <- unique(ydata$Specific.Methodology.Used)
+meth1
+```
+
+ok leave like this as you don't know what tianna might want to pull...
+
+next
+[12] "Measured.variable.s...include.one.line.for.each.variable."                                
+```{r}
+ydata$Measured.variable.s...include.one.line.for.each.variable. <- as.character(ydata$Measured.variable.s...include.one.line.for.each.variable.) #make col as.character
+meas <- unique(ydata$Measured.variable.s...include.one.line.for.each.variable.)
+meas
+```
+again his could be tricky....
+
+```{r}
+ydata$Measured.variable.s...include.one.line.for.each.variable <- replace(ydata$Measured.variable.s...include.one.line.for.each.variable, ydata$Measured.variable.s...include.one.line.for.each.variable == "carbon:nitorgen ratio", "C:N ratios") 
+
+ydata$Measured.variable.s...include.one.line.for.each.variable <- replace(ydata$Measured.variable.s...include.one.line.for.each.variable, ydata$Measured.variable.s...include.one.line.for.each.variable == "", "Stable isotope values") 
+
+```
+
+check
+```{r}
+meas1 <- unique(ydata$Measured.variable.s...include.one.line.for.each.variable.)
+meas1
+```
+
+
+next
+[11] "Unit.of.measured.variable"                                                                
+
+```{r}
+ydata$Unit.of.measured.variable <- as.character(ydata$Unit.of.measured.variable) #make col as.character
+unit <- unique(ydata$Unit.of.measured.variable)
+unit
+```
+
+```{r}
+ydata$Unit.of.measured.variable <- replace(ydata$Unit.of.measured.variable, ydata$Unit.of.measured.variable == "number of fish", "count")
+
+ydata$Unit.of.measured.variable <- replace(ydata$Unit.of.measured.variable, ydata$Unit.of.measured.variable == "Presence or absence", "presence/absence")
+```
+
+
+for the missing values, one should be 14C, 13C (study no 180)
+
+find the row number for this value
+```{r}
+which(grepl(180, ydata$Study.number)) #find the value 180 in the column study.number
+``` 
+
+ok so it's row 133
+
+and now the column is 11 
+
+```{r}
+ydata[113, 11] == "14C, 13C"
+```
+
+and check
+```{r}
+unit1 <- unique(ydata$Unit.of.measured.variable)
+unit1
+```
 
 
 ```{r}
