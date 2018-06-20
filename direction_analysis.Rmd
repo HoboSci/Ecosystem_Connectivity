@@ -65,13 +65,6 @@ y
 ```
 great
 
-ok save that ydata as a new .csv
-
-```{r}
-write.csv(ydata, file = "./data/all_yes_studies.csv", row.names = FALSE)
-```
-
-
 ```{r}
 colnames(ydata)
 ```
@@ -1254,6 +1247,9 @@ hum1 <- unique(ydata$Human.influence.on.connectivity..Y..N..or.not.specified)
 hum1
 ```
 
+ok now write  new csv
 
-
+```{r}
+write.csv(ydata, file = "./data/all_yes_studies_clean.csv", row.names = FALSE)
+```
 
