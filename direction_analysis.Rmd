@@ -258,10 +258,27 @@ meas
 again his could be tricky....
 
 ```{r}
-ydata$Measured.variable.s...include.one.line.for.each.variable <- replace(ydata$Measured.variable.s...include.one.line.for.each.variable, ydata$Measured.variable.s...include.one.line.for.each.variable == "carbon:nitorgen ratio", "C:N ratios") 
+ydata$Measured.variable.s...include.one.line.for.each.variable. <- replace(ydata$Measured.variable.s...include.one.line.for.each.variable., ydata$Measured.variable.s...include.one.line.for.each.variable. == "carbon:nitorgen ratio", "C:N ratios") 
 
-ydata$Measured.variable.s...include.one.line.for.each.variable <- replace(ydata$Measured.variable.s...include.one.line.for.each.variable, ydata$Measured.variable.s...include.one.line.for.each.variable == "", "Stable isotope values") 
+ydata$Measured.variable.s...include.one.line.for.each.variable. <- replace(ydata$Measured.variable.s...include.one.line.for.each.variable., ydata$Measured.variable.s...include.one.line.for.each.variable. == "Subsidy biomass", "subsidy biomass")
 
+ydata$Measured.variable.s...include.one.line.for.each.variable. <- replace(ydata$Measured.variable.s...include.one.line.for.each.variable., ydata$Measured.variable.s...include.one.line.for.each.variable. == "Stable isotope values", "stable isotope values")
+
+ydata$Measured.variable.s...include.one.line.for.each.variable. <- replace(ydata$Measured.variable.s...include.one.line.for.each.variable., ydata$Measured.variable.s...include.one.line.for.each.variable. == "Detritus Cover", "area covered")
+
+ydata$Measured.variable.s...include.one.line.for.each.variable. <- replace(ydata$Measured.variable.s...include.one.line.for.each.variable., ydata$Measured.variable.s...include.one.line.for.each.variable. == "wrack cover on beach", "area covered")
+
+ydata$Measured.variable.s...include.one.line.for.each.variable. <- replace(ydata$Measured.variable.s...include.one.line.for.each.variable., ydata$Measured.variable.s...include.one.line.for.each.variable. == "percent cover" , "area covered")
+
+ydata$Measured.variable.s...include.one.line.for.each.variable. <- replace(ydata$Measured.variable.s...include.one.line.for.each.variable., ydata$Measured.variable.s...include.one.line.for.each.variable. == "Nitrogen", "N")
+
+ydata$Measured.variable.s...include.one.line.for.each.variable. <- replace(ydata$Measured.variable.s...include.one.line.for.each.variable., ydata$Measured.variable.s...include.one.line.for.each.variable. == "presence of detritus", "presence")
+
+ydata$Measured.variable.s...include.one.line.for.each.variable. <- replace(ydata$Measured.variable.s...include.one.line.for.each.variable., ydata$Measured.variable.s...include.one.line.for.each.variable. == "presence of wrack", "presence")
+
+ydata$Measured.variable.s...include.one.line.for.each.variable. <- replace(ydata$Measured.variable.s...include.one.line.for.each.variable., ydata$Measured.variable.s...include.one.line.for.each.variable. == "subsidy presence", "presence")
+
+ydata$Measured.variable.s...include.one.line.for.each.variable. <- replace(ydata$Measured.variable.s...include.one.line.for.each.variable., ydata$Measured.variable.s...include.one.line.for.each.variable. == "proportion of plant material covering quadrat", "area covered")
 ```
 
 check
@@ -269,6 +286,9 @@ check
 meas1 <- unique(ydata$Measured.variable.s...include.one.line.for.each.variable.)
 meas1
 ```
+
+
+ok there are missing values... i think a lot but leave them be
 
 
 next
@@ -279,56 +299,40 @@ ydata$Unit.of.measured.variable <- as.character(ydata$Unit.of.measured.variable)
 unit <- unique(ydata$Unit.of.measured.variable)
 unit
 ```
+same thing - difficult to merge too much...
 
 ```{r}
 ydata$Unit.of.measured.variable <- replace(ydata$Unit.of.measured.variable, ydata$Unit.of.measured.variable == "number of fish", "count")
 
 ydata$Unit.of.measured.variable <- replace(ydata$Unit.of.measured.variable, ydata$Unit.of.measured.variable == "Presence or absence", "presence/absence")
+
+ydata$Unit.of.measured.variable <- replace(ydata$Unit.of.measured.variable, ydata$Unit.of.measured.variable == "N/A", "NA")
 ```
 
-
-for the missing values, one should be 14C, 13C (study no 180)
-
-find the row number for this value
-```{r}
-which(grepl(180, ydata$Study.number)) #find the value 180 in the column study.number
-``` 
-
-ok so it's row 133
-
-and now the column is 11 
-
-```{r}
-ydata[113, 11] == "14C, 13C"
-```
-
-and check
+and check...
 ```{r}
 unit1 <- unique(ydata$Unit.of.measured.variable)
 unit1
 ```
 
+ok next column
+[14] "Study.location"      
 
-```{r}
-uniquelocations <- unique(ydata$Study.location)
-uniquelocations
-```
+this will be a bit different - here you want to make a new column for country
 
-ok lots of variation... we just want countries really... 
-let's start by adding a new column called Country
+
 ```{r}
 ydata$country <- format(as.character) #created a new column called country
 colnames(ydata)
 ```
-ok great... now need to figure out how to populate it...
-lets start by populating with the locations as is
+
+lets start by populating country the locations as is
 ```{r}
 ydata$country <- ydata$Study.location
 ydata$country <- as.character(ydata$country)
 head(ydata)
 ```
 ok good now lets start replacing values so you only get country names
-
 ```{r}
 ydata$country <- replace(ydata$country, ydata$country == "Western coast of Norway", "Norway")
 ydata$country <- replace(ydata$country, ydata$country == "NW coast Spain", "Spain")
@@ -376,16 +380,13 @@ uniquecountry <- unique(ydata$country)
 uniquecountry
 ```
 ok so there are still some issues...
-USA and Spain
-Baltic Sea
-NW Mediteranean (Balearic basin)
-Sea of Okhotsk, Western Pacific Ocean
-France + UK
-Northwestern mediterranean
-Mexico and USA
-Northern Balearic Island
-""
-Meditteranean
+"Northwestern mediterranean" 
+"USA and Spain"
+"Northern Balearic Islands"
+"NW Mediteranean (Balearic basin)"
+"Sea of Okhotsk, Western Pacific Ocean"
+"France + UK"  
+
 
 First lets count how many unique studies there are in each country... https://stackoverflow.com/questions/12840294/counting-unique-distinct-values-by-group-in-a-data-frame/12848190
 
@@ -397,48 +398,58 @@ countrycount
 ```
 soo the counts for our trouble locations are...
 
-USA and Spain - 1 x
-Baltic Sea - 1
-NW Mediteranean (Balearic basin) - 1
-Sea of Okhotsk, Western Pacific Ocean - 1
-France + UK - 1 x
-Northwestern mediterranean - 1
-Mexico and USA - 1 x
-Northern Balearic Island - 1
-"" - 2
-Meditteranean - 1
+"Northwestern mediterranean"  - 1
+"USA and Spain" - 1
+"Northern Balearic Islands" - 1
+"NW Mediteranean (Balearic basin)" - 1
+"Sea of Okhotsk, Western Pacific Ocean" - 1
+"France + UK"  - 1
 
-Ok soo all but the missing country studies have only one - this makes it a little easier
-For those joint country studies, lets just add 1 value to each individual country, and then remove the joint country entry
+some need to better defined
 
+"Northwestern mediterranean"  - 1
+"Northern Balearic Islands" - 1
+"NW Mediteranean (Balearic basin)" - 1
+"Sea of Okhotsk, Western Pacific Ocean" - 1
+
+best check these papers manually to see if you can refine to a country
+
+"Northwestern mediterranean"  can be france
+"Northern Balearic Islands" can be Minorca 
+"NW Mediteranean (Balearic basin)" can be spain
+"Sea of Okhotsk, Western Pacific Ocean" can be Japan
+
+```{r}
+ydata$country <- replace(ydata$country, ydata$country == "Northwestern mediterranean", "France")
+ydata$country <- replace(ydata$country, ydata$country == "Northern Balearic Islands", "Minorca")
+ydata$country <- replace(ydata$country, ydata$country == "NW Mediteranean (Balearic basin)", "Spain")
+ydata$country <- replace(ydata$country, ydata$country == "Sea of Okhotsk, Western Pacific Ocean", "Japan")
+```
+
+then check
+```{r}
+countrycount <- ddply(ydata,~country,summarise,country_count=length(unique(Authors)))
+countrycount
+```
+
+For those joint country studies, I don't think we need an extra entry for each individual country on the dataset, so lets just add 1 value to each individual country, and then remove the joint country entry
 
 ```{r}
 countrycount$country_count[countrycount$country == "USA"] = countrycount$country_count[countrycount$country == "USA"] +1
 countrycount$country_count[countrycount$country == "Spain"] = countrycount$country_count[countrycount$country == "Spain"] +1
 countrycount <- countrycount[!(countrycount$country == "USA and Spain"), ]
-countrycount$country_count[countrycount$country == "USA"] = countrycount$country_count[countrycount$country == "USA"] +1
-countrycount$country_count[countrycount$country == "Mexico"] = countrycount$country_count[countrycount$country == "Mexico"] +1
-countrycount <- countrycount[!(countrycount$country == "Mexico and USA"), ]
+
 countrycount$country_count[countrycount$country == "France"] = countrycount$country_count[countrycount$country == "France"] +1
 countrycount$country_count[countrycount$country == "UK"] = countrycount$country_count[countrycount$country == "UK"] +1
 countrycount <- countrycount[!(countrycount$country == "France + UK"), ]
 countrycount
-
 ```
 
-ok so now left is those that i need to go look at the papers...
-
-Baltic Sea - 1
-NW Mediteranean (Balearic basin) - 1
-Sea of Okhotsk, Western Pacific Ocean - 1
-Northwestern mediterranean - 1
-Northern Balearic Island - 1
-"" - 2
-Meditteranean - 1
+ok now lets save this countrycount so you can map it. make sure to add the table into the shared googledrive
 
 ```{r}
-balticsea <- subset(ydata, country == "Baltic Sea", select = Title)
-balticsea
-
+write.csv(countrycount, file = "./data/countries.csv", row.names = FALSE)
 ```
 
+ok next!
+[15] "recipient_ecosystem_depthzone" 
