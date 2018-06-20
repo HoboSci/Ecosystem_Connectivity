@@ -941,28 +941,318 @@ ydata$Connectivity.comparisons.yn <- format(as.character) #created a new column 
 colnames(ydata)
 ```
 
-populate Connectivity.comparisons.yn as is
+populate Connectivity.comparisons.yn 
 
 ```{r}
-ydata$Connectivity.comparisons.yn <- substr(ydata$Connectivity.comparisons, 0, 1)
+ydata$Connectivity.comparisons.yn <- substr(ydata$Connectivity.comparisons, 0, 1) #this extracts the first character of the connectivity.comparions column and adds it to the .yn column
+ydata$Connectivity.comparisons.yn
 ```
-
-
 
 ```{r}
-ydata$Connectivity.comparisons.yn <- ydata$Connectivity.comparisons
-ydata$Connectivity.comparisons.yn <- as.character(ydata$Connectivity.comparisons)
-head(ydata)
+concom <- unique(ydata$Connectivity.comparisons.yn)
+concom
 ```
-ok now fix to be either y or n
 
+```{r}
+ydata$Connectivity.comparisons.yn <- replace(ydata$Connectivity.comparisons.yn, ydata$Connectivity.comparisons.yn == "Y", "y")
 
+ydata$Connectivity.comparisons.yn <- replace(ydata$Connectivity.comparisons.yn, ydata$Connectivity.comparisons.yn == "N", "n")
+
+ydata$Connectivity.comparisons.yn <- replace(ydata$Connectivity.comparisons.yn, ydata$Connectivity.comparisons.yn == "", "NA")
+```
 
 ```{r}
 concom1 <- unique(ydata$Connectivity.comparisons.yn)
 concom1
 ```
 
+
+next
+[26] "Directionality"                                                                           
+
+```{r}
+ydata$Directionality <- as.character(ydata$Directionality) #make col as.character
+direc <- unique(ydata$Directionality)
+direc
+```
+
+```{r}
+ydata$Directionality <- replace(ydata$Directionality, ydata$Directionality == "unidirectional", "U")
+
+ydata$Directionality <- replace(ydata$Directionality, ydata$Directionality == "Unidirectional", "U")
+
+ydata$Directionality <- replace(ydata$Directionality, ydata$Directionality == "Bi-directional", "R")
+
+ydata$Directionality <- replace(ydata$Directionality, ydata$Directionality == "Bidirectional", "R")
+```
+
+
+```{r}
+direc1 <- unique(ydata$Directionality)
+direc1
+```
+
+next
+ [27] "Material.s..category"                                                                     
+
+```{r}
+ydata$Material.s..category <- as.character(ydata$Material.s..category) #make col as.character
+mate <- unique(ydata$Material.s..category)
+mate
+```
+
+```{r}
+ydata$Material.s..category <- replace(ydata$Material.s..category, ydata$Material.s..category == "organisms", "organism")
+
+ydata$Material.s..category <- replace(ydata$Material.s..category, ydata$Material.s..category == "Organism", "organism")
+
+ydata$Material.s..category <- replace(ydata$Material.s..category, ydata$Material.s..category == "Organic", "OM")
+
+ydata$Material.s..category <- replace(ydata$Material.s..category, ydata$Material.s..category == "organic matter", "OM")
+
+ydata$Material.s..category <- replace(ydata$Material.s..category, ydata$Material.s..category == "Sediment", "sediment")
+
+ydata$Material.s..category <- replace(ydata$Material.s..category, ydata$Material.s..category == "organims", "organism")
+
+```
+
+```{r}
+mate1 <- unique(ydata$Material.s..category)
+mate1
+```
+
+next
+ [28] "Material.s....additional.classifications"                                                 
+```{r}
+ydata$Material.s....additional.classifications <- as.character(ydata$Material.s....additional.classifications) #make col as.character
+matead <- unique(ydata$Material.s....additional.classifications)
+matead
+```
+
+```{r}
+ydata$Material.s....additional.classifications <- replace(ydata$Material.s....additional.classifications, ydata$Material.s....additional.classifications == "N/A", "NA")
+
+ydata$Material.s....additional.classifications <- replace(ydata$Material.s....additional.classifications, ydata$Material.s....additional.classifications == "Wrack: (Laminaria hyperborea)", "wrack")
+
+ydata$Material.s....additional.classifications <- replace(ydata$Material.s....additional.classifications, ydata$Material.s....additional.classifications == "Dissolved inorganic nitrogen", "DIN")
+
+ydata$Material.s....additional.classifications <- replace(ydata$Material.s....additional.classifications, ydata$Material.s....additional.classifications == "kelp (laminariales)", "kelp")
+
+ydata$Material.s....additional.classifications <- replace(ydata$Material.s....additional.classifications, ydata$Material.s....additional.classifications == "DOM Chesapeake Bay", "DOM")
+
+ydata$Material.s....additional.classifications <- replace(ydata$Material.s....additional.classifications, ydata$Material.s....additional.classifications == "CHl", "Chl a")
+
+ydata$Material.s....additional.classifications <- replace(ydata$Material.s....additional.classifications, ydata$Material.s....additional.classifications == "Pacific Salmon", "Salmon")
+
+ydata$Material.s....additional.classifications <- replace(ydata$Material.s....additional.classifications, ydata$Material.s....additional.classifications == "Chlorophyll", "Chl a")
+
+ydata$Material.s....additional.classifications <- replace(ydata$Material.s....additional.classifications, ydata$Material.s....additional.classifications == "Nitrogen", "N")
+
+ydata$Material.s....additional.classifications <- replace(ydata$Material.s....additional.classifications, ydata$Material.s....additional.classifications == "n", "N")
+
+ydata$Material.s....additional.classifications <- replace(ydata$Material.s....additional.classifications, ydata$Material.s....additional.classifications == "c", "C")
+
+ydata$Material.s....additional.classifications <- replace(ydata$Material.s....additional.classifications, ydata$Material.s....additional.classifications == "carbon", "C")
+
+ydata$Material.s....additional.classifications <- replace(ydata$Material.s....additional.classifications, ydata$Material.s....additional.classifications == "algae wrack", "algal wrack")
+
+ydata$Material.s....additional.classifications <- replace(ydata$Material.s....additional.classifications, ydata$Material.s....additional.classifications == "", "NA")
+
+ydata$Material.s....additional.classifications <- replace(ydata$Material.s....additional.classifications, ydata$Material.s....additional.classifications == "nitrate", "?Nitrate")
+
+ydata$Material.s....additional.classifications[is.na(ydata$Material.s....additional.classifications)] <- "NA" #this changes the NA values to NA text
+```
+
+
+```{r}
+matead1 <- unique(ydata$Material.s....additional.classifications)
+matead1
+```
+
+next
+ [29] "Mechanism.of.connectivity" 
+ 
+```{r}
+ydata$Mechanism.of.connectivity <- as.character(ydata$Mechanism.of.connectivity) #make col as.character
+mechc <- unique(ydata$Mechanism.of.connectivity)
+mechc
+```
+
+```{r}
+ydata$Mechanism.of.connectivity <- replace(ydata$Mechanism.of.connectivity, ydata$Mechanism.of.connectivity == "not measured ", "not measured")
+
+ydata$Mechanism.of.connectivity <- replace(ydata$Mechanism.of.connectivity, ydata$Mechanism.of.connectivity == "salmon swim upstream", "migration")
+
+ydata$Mechanism.of.connectivity <- replace(ydata$Mechanism.of.connectivity, ydata$Mechanism.of.connectivity == "salmon migration", "migration")
+
+ydata$Mechanism.of.connectivity <- replace(ydata$Mechanism.of.connectivity, ydata$Mechanism.of.connectivity == "Pacific salmon migration", "migration")
+
+ydata$Mechanism.of.connectivity <- replace(ydata$Mechanism.of.connectivity, ydata$Mechanism.of.connectivity == "lingcod migration", "migration")
+
+ydata$Mechanism.of.connectivity <- replace(ydata$Mechanism.of.connectivity, ydata$Mechanism.of.connectivity == "lampreys swim upstream from the ocean to spawn", "migration")
+
+ydata$Mechanism.of.connectivity <- replace(ydata$Mechanism.of.connectivity, ydata$Mechanism.of.connectivity == "Organism migration", "migration")
+
+ydata$Mechanism.of.connectivity <- replace(ydata$Mechanism.of.connectivity, ydata$Mechanism.of.connectivity == "Organism migration", "migration")
+
+ydata$Mechanism.of.connectivity <- replace(ydata$Mechanism.of.connectivity, ydata$Mechanism.of.connectivity == "tidal/current drift", "Current/Tidal drift")
+
+ydata$Mechanism.of.connectivity <- replace(ydata$Mechanism.of.connectivity, ydata$Mechanism.of.connectivity == "moves with tide/currents", "Current/Tidal drift")
+
+ydata$Mechanism.of.connectivity <- replace(ydata$Mechanism.of.connectivity, ydata$Mechanism.of.connectivity == "tidal/current drift", "Current/Tidal drift")
+
+ydata$Mechanism.of.connectivity <- replace(ydata$Mechanism.of.connectivity, ydata$Mechanism.of.connectivity == "River flow drif", "River flow drift")
+
+ydata$Mechanism.of.connectivity <- replace(ydata$Mechanism.of.connectivity, ydata$Mechanism.of.connectivity == "River flow drifting", "River flow drift")
+
+ydata$Mechanism.of.connectivity <- replace(ydata$Mechanism.of.connectivity, ydata$Mechanism.of.connectivity == "Drift on currents/tidal/wave movement", "Current/Tidal/Wave drift")
+
+ydata$Mechanism.of.connectivity <- replace(ydata$Mechanism.of.connectivity, ydata$Mechanism.of.connectivity == "Drift on currents/tidal/wave movement", "Current/Tidal/Wave drift")
+
+ydata$Mechanism.of.connectivity <- replace(ydata$Mechanism.of.connectivity, ydata$Mechanism.of.connectivity == "drift on tides/currents/wave", "Current/Tidal/Wave drift")
+
+
+ydata$Mechanism.of.connectivity[is.na(ydata$Mechanism.of.connectivity)] <- "NA" #this changes the NA values to NA text
+```
+
+
+```{r}
+mechc1 <- unique(ydata$Mechanism.of.connectivity)
+mechc1
+```
+
+ok next
+ [30] "Mechanism.of.connectivity.assumed." 
+```{r}
+ydata$Mechanism.of.connectivity.assumed. <- as.character(ydata$Mechanism.of.connectivity.assumed.) #make col as.character
+conas <- unique(ydata$Mechanism.of.connectivity.assumed.)
+conas
+```
+
+```{r}
+ydata$Mechanism.of.connectivity.assumed. <- replace(ydata$Mechanism.of.connectivity.assumed., ydata$Mechanism.of.connectivity.assumed. == "Y", "y")
+
+ydata$Mechanism.of.connectivity.assumed. <- replace(ydata$Mechanism.of.connectivity.assumed., ydata$Mechanism.of.connectivity.assumed. == "Yes", "y")
+
+ydata$Mechanism.of.connectivity.assumed. <- replace(ydata$Mechanism.of.connectivity.assumed., ydata$Mechanism.of.connectivity.assumed. == "yes", "y")
+
+ydata$Mechanism.of.connectivity.assumed. <- replace(ydata$Mechanism.of.connectivity.assumed., ydata$Mechanism.of.connectivity.assumed. == "N", "n")
+
+ydata$Mechanism.of.connectivity.assumed. <- replace(ydata$Mechanism.of.connectivity.assumed., ydata$Mechanism.of.connectivity.assumed. == "No", "n")
+
+ydata$Mechanism.of.connectivity.assumed. <- replace(ydata$Mechanism.of.connectivity.assumed., ydata$Mechanism.of.connectivity.assumed. == "no", "n")
+
+ydata$Mechanism.of.connectivity.assumed.[is.na(ydata$Mechanism.of.connectivity.assumed.)] <- "NA" #this changes the NA values to NA text
+```
+
+```{r}
+conas1 <- unique(ydata$Mechanism.of.connectivity.assumed.)
+conas1
+```
+
+next
+ [31] "Active.or.passive"  
+ 
+```{r}
+ydata$Active.or.passive <- as.character(ydata$Active.or.passive) #make col as.character
+ap <- unique(ydata$Active.or.passive)
+ap
+```
+
+```{r}
+ydata$Active.or.passive <- replace(ydata$Active.or.passive, ydata$Active.or.passive == "A", "a")
+
+ydata$Active.or.passive <- replace(ydata$Active.or.passive, ydata$Active.or.passive == "Passive", "p")
+
+ydata$Active.or.passive <- replace(ydata$Active.or.passive, ydata$Active.or.passive == "assumed passive", "p")
+
+ydata$Active.or.passive <- replace(ydata$Active.or.passive, ydata$Active.or.passive == "Active", "a")
+
+ydata$Active.or.passive <- replace(ydata$Active.or.passive, ydata$Active.or.passive == "passive", "p")
+
+ydata$Active.or.passive <- replace(ydata$Active.or.passive, ydata$Active.or.passive == "active", "a")
+
+ydata$Active.or.passive <- replace(ydata$Active.or.passive, ydata$Active.or.passive == "PAssive", "p")
+
+ydata$Active.or.passive <- replace(ydata$Active.or.passive, ydata$Active.or.passive == "P", "p")
+
+ydata$Active.or.passive[is.na(ydata$Active.or.passive)] <- "NA" #this changes the NA values to NA text
+```
+
+
+```{r}
+ap1 <- unique(ydata$Active.or.passive)
+ap1
+```
+
+next
+ [32] "If.available..provide.the.maximum.distance.materials.were.observed.to.have.moved..meters."
+ 
+```{r}
+ydata$If.available..provide.the.maximum.distance.materials.were.observed.to.have.moved..meters. <- as.character(ydata$If.available..provide.the.maximum.distance.materials.were.observed.to.have.moved..meters.) #make col as.character
+distm <- unique(ydata$If.available..provide.the.maximum.distance.materials.were.observed.to.have.moved..meters.)
+distm
+```
+
+```{r}
+ydata$If.available..provide.the.maximum.distance.materials.were.observed.to.have.moved..meters. <- replace(ydata$If.available..provide.the.maximum.distance.materials.were.observed.to.have.moved..meters., ydata$If.available..provide.the.maximum.distance.materials.were.observed.to.have.moved..meters. == "N/A", "NA")
+
+ydata$If.available..provide.the.maximum.distance.materials.were.observed.to.have.moved..meters. <- replace(ydata$If.available..provide.the.maximum.distance.materials.were.observed.to.have.moved..meters., ydata$If.available..provide.the.maximum.distance.materials.were.observed.to.have.moved..meters. == "N", "NA")
+
+ydata$If.available..provide.the.maximum.distance.materials.were.observed.to.have.moved..meters. <- replace(ydata$If.available..provide.the.maximum.distance.materials.were.observed.to.have.moved..meters., ydata$If.available..provide.the.maximum.distance.materials.were.observed.to.have.moved..meters. == "not indicated", "NA")
+
+ydata$If.available..provide.the.maximum.distance.materials.were.observed.to.have.moved..meters. <- replace(ydata$If.available..provide.the.maximum.distance.materials.were.observed.to.have.moved..meters., ydata$If.available..provide.the.maximum.distance.materials.were.observed.to.have.moved..meters. == "", "NA")
+
+ydata$If.available..provide.the.maximum.distance.materials.were.observed.to.have.moved..meters.[is.na(ydata$If.available..provide.the.maximum.distance.materials.were.observed.to.have.moved..meters.)] <- "NA" #this changes the NA values to NA text
+
+```
+
+
+```{r}
+distm1 <- unique(ydata$If.available..provide.the.maximum.distance.materials.were.observed.to.have.moved..meters.)
+distm1
+```
+
+next
+[34] "Human.influence.on.connectivity..Y..N..or.not.specified"   
+```{r}
+ydata$Human.influence.on.connectivity..Y..N..or.not.specified <- as.character(ydata$Human.influence.on.connectivity..Y..N..or.not.specified) #make col as.character
+hum <- unique(ydata$Human.influence.on.connectivity..Y..N..or.not.specified)
+hum
+```
+
+```{r}
+ydata$Human.influence.on.connectivity..Y..N..or.not.specified <- replace(ydata$Human.influence.on.connectivity..Y..N..or.not.specified, ydata$Human.influence.on.connectivity..Y..N..or.not.specified == "N", "n")
+
+ydata$Human.influence.on.connectivity..Y..N..or.not.specified <- replace(ydata$Human.influence.on.connectivity..Y..N..or.not.specified, ydata$Human.influence.on.connectivity..Y..N..or.not.specified == "Y", "y")
+
+ydata$Human.influence.on.connectivity..Y..N..or.not.specified <- replace(ydata$Human.influence.on.connectivity..Y..N..or.not.specified, ydata$Human.influence.on.connectivity..Y..N..or.not.specified == "not specified", "NA")
+
+ydata$Human.influence.on.connectivity..Y..N..or.not.specified <- replace(ydata$Human.influence.on.connectivity..Y..N..or.not.specified, ydata$Human.influence.on.connectivity..Y..N..or.not.specified == "Not specified", "NA")
+
+ydata$Human.influence.on.connectivity..Y..N..or.not.specified <- replace(ydata$Human.influence.on.connectivity..Y..N..or.not.specified, ydata$Human.influence.on.connectivity..Y..N..or.not.specified == "not indicated", "NA")
+
+ydata$Human.influence.on.connectivity..Y..N..or.not.specified <- replace(ydata$Human.influence.on.connectivity..Y..N..or.not.specified, ydata$Human.influence.on.connectivity..Y..N..or.not.specified == "", "NA")
+
+ydata$Human.influence.on.connectivity..Y..N..or.not.specified <- replace(ydata$Human.influence.on.connectivity..Y..N..or.not.specified, ydata$Human.influence.on.connectivity..Y..N..or.not.specified == "yes", "y")
+
+ydata$Human.influence.on.connectivity..Y..N..or.not.specified <- replace(ydata$Human.influence.on.connectivity..Y..N..or.not.specified, ydata$Human.influence.on.connectivity..Y..N..or.not.specified == "Yes", "y")
+
+ydata$Human.influence.on.connectivity..Y..N..or.not.specified <- replace(ydata$Human.influence.on.connectivity..Y..N..or.not.specified, ydata$Human.influence.on.connectivity..Y..N..or.not.specified == "yes", "y")
+
+ydata$Human.influence.on.connectivity..Y..N..or.not.specified <- replace(ydata$Human.influence.on.connectivity..Y..N..or.not.specified, ydata$Human.influence.on.connectivity..Y..N..or.not.specified == "No ", "y")
+
+
+ydata$Human.influence.on.connectivity..Y..N..or.not.specified <- replace(ydata$Human.influence.on.connectivity..Y..N..or.not.specified, ydata$Human.influence.on.connectivity..Y..N..or.not.specified == "No", "y")
+
+ydata$Human.influence.on.connectivity..Y..N..or.not.specified[is.na(ydata$Human.influence.on.connectivity..Y..N..or.not.specified)] <- "NA" #this changes the NA values to NA text
+```
+
+
+```{r}
+hum1 <- unique(ydata$Human.influence.on.connectivity..Y..N..or.not.specified)
+hum1
+```
 
 
 
