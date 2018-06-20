@@ -453,3 +453,517 @@ write.csv(countrycount, file = "./data/countries.csv", row.names = FALSE)
 
 ok next!
 [15] "recipient_ecosystem_depthzone" 
+
+```{r}
+ydata$recipient_ecosystem_depthzone <- as.character(ydata$recipient_ecosystem_depthzone) #make col as.character
+rdepth <- unique(ydata$recipient_ecosystem_depthzone)
+rdepth
+```
+
+ok and change...
+```{r}
+ydata$recipient_ecosystem_depthzone <- replace(ydata$recipient_ecosystem_depthzone, ydata$recipient_ecosystem_depthzone == "Offshore", "offshore")
+
+ydata$recipient_ecosystem_depthzone <- replace(ydata$recipient_ecosystem_depthzone, ydata$recipient_ecosystem_depthzone == "Supratidal", "supratidal")
+
+ydata$recipient_ecosystem_depthzone <- replace(ydata$recipient_ecosystem_depthzone, ydata$recipient_ecosystem_depthzone == "surpatidal", "supratidal")
+
+ydata$recipient_ecosystem_depthzone <- replace(ydata$recipient_ecosystem_depthzone, ydata$recipient_ecosystem_depthzone == "nearshore or intertidal (not specified)", "intertidal or nearshore (not stated)")
+
+ydata$recipient_ecosystem_depthzone <- replace(ydata$recipient_ecosystem_depthzone, ydata$recipient_ecosystem_depthzone == "Terrestrial", "terrestrial")
+```
+
+and check
+```{r}
+rdepth1 <- unique(ydata$recipient_ecosystem_depthzone)
+rdepth1
+```
+
+ok next
+[14] "recipient_geomorphic_unit"                                                                
+
+```{r}
+ydata$recipient_geomorphic_unit <- as.character(ydata$recipient_geomorphic_unit) #make col as.character
+rgeo <- unique(ydata$recipient_geomorphic_unit)
+rgeo
+```
+
+```{r}
+ydata$recipient_geomorphic_unit <- replace(ydata$recipient_geomorphic_unit, ydata$recipient_geomorphic_unit == "Canyon", "submarine canyon")
+
+ydata$recipient_geomorphic_unit <- replace(ydata$recipient_geomorphic_unit, ydata$recipient_geomorphic_unit == "terrestrial/watershed", "watershed")
+
+ydata$recipient_geomorphic_unit <- replace(ydata$recipient_geomorphic_unit, ydata$recipient_geomorphic_unit == "Watershed", "watershed")
+
+ydata$recipient_geomorphic_unit <- replace(ydata$recipient_geomorphic_unit, ydata$recipient_geomorphic_unit == "Estuary", "estuary")
+
+ydata$recipient_geomorphic_unit <- replace(ydata$recipient_geomorphic_unit, ydata$recipient_geomorphic_unit == "Upper estuary", "estuary")
+
+ydata$recipient_geomorphic_unit <- replace(ydata$recipient_geomorphic_unit, ydata$recipient_geomorphic_unit == "Na", "NA")
+
+ydata$recipient_geomorphic_unit[is.na(ydata$recipient_geomorphic_unit)] <- "NA" #this changes the NA values to NA text
+```
+
+check
+```{r}
+rgeo1 <- unique(ydata$recipient_geomorphic_unit)
+rgeo1
+```
+
+next..
+
+ [15] "Recipient.ecosystem.substrate"                                                            
+
+```{r}
+ydata$Recipient.ecosystem.substrate <- as.character(ydata$Recipient.ecosystem.substrate) #make col as.character
+rsub <- unique(ydata$Recipient.ecosystem.substrate)
+rsub
+```
+
+```{r}
+ydata$Recipient.ecosystem.substrate <- replace(ydata$Recipient.ecosystem.substrate, ydata$Recipient.ecosystem.substrate == "na", "NA")
+
+ydata$Recipient.ecosystem.substrate <- replace(ydata$Recipient.ecosystem.substrate, ydata$Recipient.ecosystem.substrate == "various sediments", "sediment")
+
+ydata$Recipient.ecosystem.substrate[is.na(ydata$Recipient.ecosystem.substrate)] <- "NA" #this changes the NA values to NA text
+
+```
+
+check
+```{r}
+rsub1 <- unique(ydata$Recipient.ecosystem.substrate)
+rsub1
+```
+
+next
+ [16] "Recipient.ecosystem...table.2.classification"                                             
+```{r}
+ydata$Recipient.ecosystem...table.2.classification <- as.character(ydata$Recipient.ecosystem...table.2.classification) #make col as.character
+rclas <- unique(ydata$Recipient.ecosystem...table.2.classification)
+rclas
+```
+
+```{r}
+ydata$Recipient.ecosystem...table.2.classification <- replace(ydata$Recipient.ecosystem...table.2.classification, ydata$Recipient.ecosystem...table.2.classification == "Open ocean", "pelagic")
+
+ydata$Recipient.ecosystem...table.2.classification <- replace(ydata$Recipient.ecosystem...table.2.classification, ydata$Recipient.ecosystem...table.2.classification == "Pelagic", "pelagic")
+
+ydata$Recipient.ecosystem...table.2.classification <- replace(ydata$Recipient.ecosystem...table.2.classification, ydata$Recipient.ecosystem...table.2.classification == "pelagic (coastal)", "pelagic")
+
+ydata$Recipient.ecosystem...table.2.classification <- replace(ydata$Recipient.ecosystem...table.2.classification, ydata$Recipient.ecosystem...table.2.classification == "Sheltered open waters", "pelagic")
+
+ydata$Recipient.ecosystem...table.2.classification <- replace(ydata$Recipient.ecosystem...table.2.classification, ydata$Recipient.ecosystem...table.2.classification == "water column", "pelagic")
+
+ydata$Recipient.ecosystem...table.2.classification <- replace(ydata$Recipient.ecosystem...table.2.classification, ydata$Recipient.ecosystem...table.2.classification == "Sandy beach", "sandy beach")
+
+ydata$Recipient.ecosystem...table.2.classification <- replace(ydata$Recipient.ecosystem...table.2.classification, ydata$Recipient.ecosystem...table.2.classification == "Seagrass Bed", "seagrass bed")
+
+ydata$Recipient.ecosystem...table.2.classification <- replace(ydata$Recipient.ecosystem...table.2.classification, ydata$Recipient.ecosystem...table.2.classification == "seagrass", "seagrass bed")
+
+ydata$Recipient.ecosystem...table.2.classification <- replace(ydata$Recipient.ecosystem...table.2.classification, ydata$Recipient.ecosystem...table.2.classification == "Estuary", "estuary")
+
+ydata$Recipient.ecosystem...table.2.classification <- replace(ydata$Recipient.ecosystem...table.2.classification, ydata$Recipient.ecosystem...table.2.classification == "Canyons", "submarine canyon")
+
+ydata$Recipient.ecosystem...table.2.classification <- replace(ydata$Recipient.ecosystem...table.2.classification, ydata$Recipient.ecosystem...table.2.classification == "Sandy intertidal", "sandy intertidal")
+
+ydata$Recipient.ecosystem...table.2.classification <- replace(ydata$Recipient.ecosystem...table.2.classification, ydata$Recipient.ecosystem...table.2.classification == "Sandy Intertidal", "sandy intertidal")
+
+ydata$Recipient.ecosystem...table.2.classification <- replace(ydata$Recipient.ecosystem...table.2.classification, ydata$Recipient.ecosystem...table.2.classification == "algal bed - green", "macroalgal bed - green")
+
+ydata$Recipient.ecosystem...table.2.classification <- replace(ydata$Recipient.ecosystem...table.2.classification, ydata$Recipient.ecosystem...table.2.classification == "Beach dunes", "Sand Dune")
+
+ydata$Recipient.ecosystem...table.2.classification <- replace(ydata$Recipient.ecosystem...table.2.classification, ydata$Recipient.ecosystem...table.2.classification == "Mud Flats", "mudflat")
+
+ydata$Recipient.ecosystem...table.2.classification <- replace(ydata$Recipient.ecosystem...table.2.classification, ydata$Recipient.ecosystem...table.2.classification == "Mud Flat", "mudflat")
+
+ydata$Recipient.ecosystem...table.2.classification <- replace(ydata$Recipient.ecosystem...table.2.classification, ydata$Recipient.ecosystem...table.2.classification == "Forest", "forest")
+
+ydata$Recipient.ecosystem...table.2.classification <- replace(ydata$Recipient.ecosystem...table.2.classification, ydata$Recipient.ecosystem...table.2.classification == "beach (poorly defined)", "beach")
+
+
+ydata$Recipient.ecosystem...table.2.classification <- replace(ydata$Recipient.ecosystem...table.2.classification, ydata$Recipient.ecosystem...table.2.classification == " ", "Sand Dune")
+
+ydata$Recipient.ecosystem...table.2.classification <- replace(ydata$Recipient.ecosystem...table.2.classification, ydata$Recipient.ecosystem...table.2.classification == "Salt Marsh", "saltmarsh")
+
+ydata$Recipient.ecosystem...table.2.classification <- replace(ydata$Recipient.ecosystem...table.2.classification, ydata$Recipient.ecosystem...table.2.classification == "salt marsh", "saltmarsh")
+
+ydata$Recipient.ecosystem...table.2.classification[is.na(ydata$Recipient.ecosystem...table.2.classification)] <- "NA" #this changes the NA values to NA text
+
+```
+
+check
+```{r}
+rclas1 <- unique(ydata$Recipient.ecosystem...table.2.classification)
+rclas1
+```
+ok next...
+ [17] "Recipient.ecosystem...other.classification"                                               
+
+```{r}
+ydata$Recipient.ecosystem...other.classification <- as.character(ydata$Recipient.ecosystem...other.classification) #make col as.character
+roclas <- unique(ydata$Recipient.ecosystem...other.classification)
+roclas
+```
+
+```{r}
+ydata$Recipient.ecosystem...other.classification <- replace(ydata$Recipient.ecosystem...other.classification, ydata$Recipient.ecosystem...other.classification == "Eelgrass", "eelgrass")
+
+ydata$Recipient.ecosystem...other.classification <- replace(ydata$Recipient.ecosystem...other.classification, ydata$Recipient.ecosystem...other.classification == "Na", "NA")
+
+ydata$Recipient.ecosystem...other.classification <- replace(ydata$Recipient.ecosystem...other.classification, ydata$Recipient.ecosystem...other.classification == "na", "NA")
+
+ydata$Recipient.ecosystem...other.classification <- replace(ydata$Recipient.ecosystem...other.classification, ydata$Recipient.ecosystem...other.classification == "", "foredune")
+
+ydata$Recipient.ecosystem...other.classification[is.na(ydata$Recipient.ecosystem...other.classification)] <- "NA" #this changes the NA values to NA text
+```
+
+check
+```{r}
+roclas1 <- unique(ydata$Recipient.ecosystem...other.classification)
+roclas1
+```
+ next
+  [18] "Recipient.ecosystem.depth..m." 
+```{r}
+ydata$Recipient.ecosystem.depth..m. <- as.character(ydata$Recipient.ecosystem.depth..m) #make col as.character
+rdm <- unique(ydata$Recipient.ecosystem.depth..m.)
+rdm
+```
+
+```{r}
+ydata$Recipient.ecosystem.depth..m. <- replace(ydata$Recipient.ecosystem.depth..m., ydata$Recipient.ecosystem.depth..m. == "4 to 9 meters", "4 - 9")
+
+ydata$Recipient.ecosystem.depth..m. <- replace(ydata$Recipient.ecosystem.depth..m., ydata$Recipient.ecosystem.depth..m. == "5-15", "5 - 15")
+
+ydata$Recipient.ecosystem.depth..m. <- replace(ydata$Recipient.ecosystem.depth..m., ydata$Recipient.ecosystem.depth..m. == "153-454", "153 - 454")
+
+ydata$Recipient.ecosystem.depth..m. <- replace(ydata$Recipient.ecosystem.depth..m., ydata$Recipient.ecosystem.depth..m. == "40-50m", "40 - 50")
+
+ydata$Recipient.ecosystem.depth..m. <- replace(ydata$Recipient.ecosystem.depth..m., ydata$Recipient.ecosystem.depth..m. == "18m", "18")
+
+ydata$Recipient.ecosystem.depth..m. <- replace(ydata$Recipient.ecosystem.depth..m., ydata$Recipient.ecosystem.depth..m. == "sampled at 1m", "1")
+
+ydata$Recipient.ecosystem.depth..m. <- replace(ydata$Recipient.ecosystem.depth..m., ydata$Recipient.ecosystem.depth..m. == "450 to 2200", "450 - 2200")
+
+ydata$Recipient.ecosystem.depth..m. <- replace(ydata$Recipient.ecosystem.depth..m., ydata$Recipient.ecosystem.depth..m. == "30 meters to surface (frazil and floating ice)", "0 - 30 (frazil and floating ice)")
+
+ydata$Recipient.ecosystem.depth..m. <- replace(ydata$Recipient.ecosystem.depth..m., ydata$Recipient.ecosystem.depth..m. == " 1000–1040", "1000 – 1040")
+
+ydata$Recipient.ecosystem.depth..m. <- replace(ydata$Recipient.ecosystem.depth..m., ydata$Recipient.ecosystem.depth..m. == "na", "NA")
+
+ydata$Recipient.ecosystem.depth..m. <- replace(ydata$Recipient.ecosystem.depth..m., ydata$Recipient.ecosystem.depth..m. == "260 to 300", "260 - 300")
+
+ydata$Recipient.ecosystem.depth..m. <- replace(ydata$Recipient.ecosystem.depth..m., ydata$Recipient.ecosystem.depth..m. == "N/A", "NA")
+
+ydata$Recipient.ecosystem.depth..m. <- replace(ydata$Recipient.ecosystem.depth..m., ydata$Recipient.ecosystem.depth..m. == "10 to 15m", "10 - 15")
+
+ydata$Recipient.ecosystem.depth..m. <- replace(ydata$Recipient.ecosystem.depth..m., ydata$Recipient.ecosystem.depth..m. == "", "NA")
+
+ydata$Recipient.ecosystem.depth..m. <- replace(ydata$Recipient.ecosystem.depth..m., ydata$Recipient.ecosystem.depth..m. == "15-45", "15 - 45")
+
+ydata$Recipient.ecosystem.depth..m. <- replace(ydata$Recipient.ecosystem.depth..m., ydata$Recipient.ecosystem.depth..m. == "87-357", "87 - 357")
+
+ydata$Recipient.ecosystem.depth..m. <- replace(ydata$Recipient.ecosystem.depth..m., ydata$Recipient.ecosystem.depth..m. == "50-170m", "50 - 170")
+
+ydata$Recipient.ecosystem.depth..m. <- replace(ydata$Recipient.ecosystem.depth..m., ydata$Recipient.ecosystem.depth..m. == "6 to 12", "6 - 12")
+
+ydata$Recipient.ecosystem.depth..m. <- replace(ydata$Recipient.ecosystem.depth..m., ydata$Recipient.ecosystem.depth..m. == ">90m", ">90")
+
+ydata$Recipient.ecosystem.depth..m. <- replace(ydata$Recipient.ecosystem.depth..m., ydata$Recipient.ecosystem.depth..m. == "<40m", "<40")
+
+ydata$Recipient.ecosystem.depth..m.[is.na(ydata$Recipient.ecosystem.depth..m.)] <- "NA" #this changes the NA values to NA text
+```
+
+check
+```{r}
+rdm1 <- unique(ydata$Recipient.ecosystem.depth..m.)
+rdm1
+``` 
+
+next...
+ [19] "donor_ecosystem_depthzone"                                                                
+
+```{r}
+ydata$donor_ecosystem_depthzone <- as.character(ydata$donor_ecosystem_depthzone) #make col as.character
+ddep <- unique(ydata$donor_ecosystem_depthzone)
+ddep
+```
+
+```{r}
+ydata$donor_ecosystem_depthzone <- replace(ydata$donor_ecosystem_depthzone, ydata$donor_ecosystem_depthzone == "Terrestrial", "terrestrial")
+
+ydata$donor_ecosystem_depthzone <- replace(ydata$donor_ecosystem_depthzone, ydata$donor_ecosystem_depthzone == "Intertidal", "intertidal")
+
+ydata$donor_ecosystem_depthzone <- replace(ydata$donor_ecosystem_depthzone, ydata$donor_ecosystem_depthzone == "intertidal nearshore (not specificed)", "intertidal or nearshore (not specified)")
+
+ydata$donor_ecosystem_depthzone <- replace(ydata$donor_ecosystem_depthzone, ydata$donor_ecosystem_depthzone == "intertidal or nearshore (not assessed)", "intertidal or nearshore (not specified)")
+
+ydata$donor_ecosystem_depthzone <- replace(ydata$donor_ecosystem_depthzone, ydata$donor_ecosystem_depthzone == "Nearshore", "nearshore")
+
+ydata$donor_ecosystem_depthzone <- replace(ydata$donor_ecosystem_depthzone, ydata$donor_ecosystem_depthzone == "NA - they just looked at what was in the recipient", "NA")
+
+ydata$donor_ecosystem_depthzone <- replace(ydata$donor_ecosystem_depthzone, ydata$donor_ecosystem_depthzone == "NA (not state)", "NA")
+
+ydata$donor_ecosystem_depthzone[is.na(ydata$donor_ecosystem_depthzone)] <- "NA" #this changes the NA values to NA text
+```
+
+check
+```{r}
+ddep1 <- unique(ydata$donor_ecosystem_depthzone)
+ddep1
+```
+
+next
+ [20] "donor_geomorphic_unit"                                                                    
+
+```{r}
+ydata$donor_geomorphic_unit <- as.character(ydata$donor_geomorphic_unit) #make col as.character
+dgm <- unique(ydata$donor_geomorphic_unit)
+dgm
+```
+
+```{r}
+ydata$donor_geomorphic_unit <- replace(ydata$donor_geomorphic_unit, ydata$donor_geomorphic_unit == "Watershed", "watershed")
+
+ydata$donor_geomorphic_unit <- replace(ydata$donor_geomorphic_unit, ydata$donor_geomorphic_unit == "terrestrial/watershed", "watershed")
+
+ydata$donor_geomorphic_unit <- replace(ydata$donor_geomorphic_unit, ydata$donor_geomorphic_unit == "Terrestrial/Watershed", "watershed")
+
+ydata$donor_geomorphic_unit <- replace(ydata$donor_geomorphic_unit, ydata$donor_geomorphic_unit == "Estuary", "estuary")
+
+ydata$donor_geomorphic_unit <- replace(ydata$donor_geomorphic_unit, ydata$donor_geomorphic_unit == "estuaries", "estuary")
+
+ydata$donor_geomorphic_unit <- replace(ydata$donor_geomorphic_unit, ydata$donor_geomorphic_unit == "not defined - may be nearshore or intertidal", "nearshore or intertidal")
+
+ydata$donor_geomorphic_unit <- replace(ydata$donor_geomorphic_unit, ydata$donor_geomorphic_unit == "Na", "NA")
+
+ydata$donor_geomorphic_unit <- replace(ydata$donor_geomorphic_unit, ydata$donor_geomorphic_unit == "Urban", "urban")
+
+ydata$donor_geomorphic_unit <- replace(ydata$donor_geomorphic_unit, ydata$donor_geomorphic_unit == "NA (not state)", "NA")
+
+ydata$donor_geomorphic_unit[is.na(ydata$donor_geomorphic_unit)] <- "NA" #this changes the NA values to NA text
+
+```
+
+
+check
+```{r}
+dgm1 <- unique(ydata$donor_geomorphic_unit)
+dgm1
+```
+
+next
+ [21] "Donor.ecosystem.substrate"                                                                
+```{r}
+ydata$Donor.ecosystem.substrate <- as.character(ydata$Donor.ecosystem.substrate) #make col as.character
+dsub <- unique(ydata$Donor.ecosystem.substrate)
+dsub
+```
+
+
+```{r}
+ydata$Donor.ecosystem.substrate <- replace(ydata$Donor.ecosystem.substrate, ydata$Donor.ecosystem.substrate == "N/A", "NA")
+
+ydata$Donor.ecosystem.substrate <- replace(ydata$Donor.ecosystem.substrate, ydata$Donor.ecosystem.substrate == "Na", "NA")
+
+ydata$Donor.ecosystem.substrate <- replace(ydata$Donor.ecosystem.substrate, ydata$Donor.ecosystem.substrate == "", "water")
+
+ydata$Donor.ecosystem.substrate[is.na(ydata$Donor.ecosystem.substrate)] <- "NA" #this changes the NA values to NA text
+
+```
+
+check
+```{r}
+dsub1 <- unique(ydata$Donor.ecosystem.substrate)
+dsub1
+```
+
+next..
+ [22] "Donor.ecosystem...table.2.classification"                                                 
+
+```{r}
+ydata$Donor.ecosystem...table.2.classification <- as.character(ydata$Donor.ecosystem...table.2.classification) #make col as.character
+dclas <- unique(ydata$Donor.ecosystem...table.2.classification)
+dclas
+```
+
+
+```{r}
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "Terrestrial", "terrestrial")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "terrestrial ", "terrestrial")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "Kelp forest", "kelp forest")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "Kelp ", "kelp forest")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "kelp", "kelp forest")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "Salt Marsh", "saltmarsh")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "salt Marsh", "saltmarsh")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "salt marsh", "saltmarsh")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "green macroalgae", "algal bed - green")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "red macroalgae", "algal bed - red")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "brown macroalgae", "algal bed - brown")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "algal bed", "algal bed - other")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "Rivers and streams", "rivers and streams")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "Rivers and Streams", "rivers and streams")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "Human altered", "Developed")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "Human-altered", "Developed")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "Pelagic", "pelagic")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "seagrass", "seagrass bed")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "Seagrass Beds", "seagrass bed")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "Seagrass", "seagrass bed")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "Seagrass beds", "seagrass bed")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "Intertidal", "intertidal")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "Estuary", "estuary")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "Wetlands", "wetland")
+
+ydata$Donor.ecosystem...table.2.classification <- replace(ydata$Donor.ecosystem...table.2.classification, ydata$Donor.ecosystem...table.2.classification == "Mud Flat", "mudflat")
+
+ydata$Donor.ecosystem...table.2.classification[is.na(ydata$Donor.ecosystem...table.2.classification)] <- "NA" #this changes the NA values to NA text
+
+```
+
+
+check
+```{r}
+dclas1 <- unique(ydata$Donor.ecosystem...table.2.classification)
+dclas1
+```
+
+next
+ [23] "Donor.ecosystem...other.classification"                                                   
+
+```{r}
+ydata$Donor.ecosystem...other.classification <- as.character(ydata$Donor.ecosystem...other.classification) #make col as.character
+docl <- unique(ydata$Donor.ecosystem...other.classification)
+docl
+```
+
+
+```{r}
+ydata$Donor.ecosystem...other.classification <- replace(ydata$Donor.ecosystem...other.classification, ydata$Donor.ecosystem...other.classification == "Eelgrass", "eelgrass")
+
+ydata$Donor.ecosystem...other.classification <- replace(ydata$Donor.ecosystem...other.classification, ydata$Donor.ecosystem...other.classification == "eelgrass bed", "eelgrass")
+
+ydata$Donor.ecosystem...other.classification <- replace(ydata$Donor.ecosystem...other.classification, ydata$Donor.ecosystem...other.classification == "eelgrass bed", "eelgrass")
+
+ydata$Donor.ecosystem...other.classification <- replace(ydata$Donor.ecosystem...other.classification, ydata$Donor.ecosystem...other.classification == "developed - dredge dump site", "developed")
+
+ydata$Donor.ecosystem...other.classification <- replace(ydata$Donor.ecosystem...other.classification, ydata$Donor.ecosystem...other.classification == "intertidal of estuary", "intertidal in estuary")
+
+ydata$Donor.ecosystem...other.classification <- replace(ydata$Donor.ecosystem...other.classification, ydata$Donor.ecosystem...other.classification == "Laminaria sp.", "Laminaria")
+
+ydata$Donor.ecosystem...other.classification <- replace(ydata$Donor.ecosystem...other.classification, ydata$Donor.ecosystem...other.classification == "ulva spp.", "Ulva")
+
+ydata$Donor.ecosystem...other.classification <- replace(ydata$Donor.ecosystem...other.classification, ydata$Donor.ecosystem...other.classification == "ulva (sea lettuce)", "Ulva")
+
+ydata$Donor.ecosystem...other.classification <- replace(ydata$Donor.ecosystem...other.classification, ydata$Donor.ecosystem...other.classification == "ulva", "Ulva")
+
+ydata$Donor.ecosystem...other.classification <- replace(ydata$Donor.ecosystem...other.classification, ydata$Donor.ecosystem...other.classification == "N/A", "NA")
+
+ydata$Donor.ecosystem...other.classification <- replace(ydata$Donor.ecosystem...other.classification, ydata$Donor.ecosystem...other.classification == "(Laminaria hyperborea)", "Laminaria")
+
+ydata$Donor.ecosystem...other.classification <- replace(ydata$Donor.ecosystem...other.classification, ydata$Donor.ecosystem...other.classification == "(Laminaria hyperborea)", "Laminaria")
+
+
+ydata$Donor.ecosystem...other.classification <- replace(ydata$Donor.ecosystem...other.classification, ydata$Donor.ecosystem...other.classification == "", "NA") #lots of missing values - add as NA
+
+ydata$Donor.ecosystem...other.classification[is.na(ydata$Donor.ecosystem...other.classification)] <- "NA" #this changes the NA values to NA text
+```
+
+
+```{r}
+docl1 <- unique(ydata$Donor.ecosystem...other.classification)
+docl1
+```
+
+next
+ [24] "Donor.ecosystem.depth..m."                                                                
+```{r}
+ydata$Donor.ecosystem.depth..m. <- as.character(ydata$Donor.ecosystem.depth..m.) #make col as.character
+ddepm <- unique(ydata$Donor.ecosystem.depth..m.)
+ddepm
+```
+
+```{r}
+ydata$Donor.ecosystem.depth..m. <- replace(ydata$Donor.ecosystem.depth..m., ydata$Donor.ecosystem.depth..m. == "N/A", "NA")
+
+ydata$Donor.ecosystem.depth..m. <- replace(ydata$Donor.ecosystem.depth..m., ydata$Donor.ecosystem.depth..m. == "1.5 to 8 meters", "1.5 - 8")
+
+ydata$Donor.ecosystem.depth..m. <- replace(ydata$Donor.ecosystem.depth..m., ydata$Donor.ecosystem.depth..m. == "", "NA")
+
+ydata$Donor.ecosystem.depth..m. <- replace(ydata$Donor.ecosystem.depth..m., ydata$Donor.ecosystem.depth..m. == "<18m", "<18")
+
+ydata$Donor.ecosystem.depth..m. <- replace(ydata$Donor.ecosystem.depth..m., ydata$Donor.ecosystem.depth..m. == "< 8 m", "<8")
+
+ydata$Donor.ecosystem.depth..m.[is.na(ydata$Donor.ecosystem.depth..m.)] <- "NA" #this changes the NA values to NA text
+```
+
+
+```{r}
+ddepm1 <- unique(ydata$Donor.ecosystem.depth..m.)
+ddepm1
+```
+
+next
+ [25] "Connectivity.comparisons"                                                                 
+
+```{r}
+ydata$Connectivity.comparisons <- as.character(ydata$Connectivity.comparisons) #make col as.character
+concom <- unique(ydata$Connectivity.comparisons)
+concom
+```
+
+ok there is info here that might be useful...maybe just make another column with y/n
+
+```{r}
+ydata$Connectivity.comparisons.yn <- format(as.character) #created a new column called country
+colnames(ydata)
+```
+
+populate Connectivity.comparisons.yn as is
+
+```{r}
+ydata$Connectivity.comparisons.yn <- substr(ydata$Connectivity.comparisons, 0, 1)
+```
+
+
+
+```{r}
+ydata$Connectivity.comparisons.yn <- ydata$Connectivity.comparisons
+ydata$Connectivity.comparisons.yn <- as.character(ydata$Connectivity.comparisons)
+head(ydata)
+```
+ok now fix to be either y or n
+
+
+
+```{r}
+concom1 <- unique(ydata$Connectivity.comparisons.yn)
+concom1
+```
+
+
+
+
+
