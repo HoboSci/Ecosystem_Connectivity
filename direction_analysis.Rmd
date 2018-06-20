@@ -65,13 +65,6 @@ y
 ```
 great
 
-ok save that ydata as a new .csv
-
-```{r}
-write.csv(ydata, file = "./data/all_yes_studies.csv", row.names = FALSE)
-```
-
-
 ```{r}
 colnames(ydata)
 ```
@@ -1254,6 +1247,47 @@ hum1 <- unique(ydata$Human.influence.on.connectivity..Y..N..or.not.specified)
 hum1
 ```
 
+rewrite all the column headers into something better...
+```{r}
+colnames(ydata)
+```
+
+```{r}
+colnames(ydata)[colnames(ydata) == "Include..Y..N..M"] <- "inc"                                                         
+colnames(ydata)[colnames(ydata) == "If.excluding..reason.for.exclusion" ] <- "exclusion_reason"  
+colnames(ydata)[colnames(ydata) == "From.original.search..Y.or.N" ] <- "original_search"                                 colnames(ydata)[colnames(ydata) == "Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem" ] <- "focus"                           
+colnames(ydata)[colnames(ydata) == "Specific.Methodology.Used" ] <- "method"
+colnames(ydata)[colnames(ydata) == "Measured.variable.s...include.one.line.for.each.variable."  ] <- "measured_variable"
+colnames(ydata)[colnames(ydata) == "Unit.of.measured.variable"  ] <- "measured_variable_unit"                           
+colnames(ydata)[colnames(ydata) == "recipient_ecosystem_depthzone"  ] <- "recip_depthzone"                              
+colnames(ydata)[colnames(ydata) == "recipient_geomorphic_unit"  ] <- "recip_geom"                                       
+colnames(ydata)[colnames(ydata) == "Recipient.ecosystem.substrate"  ] <- "recip_substrate"  
+colnames(ydata)[colnames(ydata) == "Recipient.ecosystem...table.2.classification"  ] <- "recip_class"
+colnames(ydata)[colnames(ydata) == "Recipient.ecosystem...other.classification"  ] <- "recip_other_class"
+colnames(ydata)[colnames(ydata) == "Recipient.ecosystem.depth..m."   ] <- "recip_depth"
+colnames(ydata)[colnames(ydata) == "donor_ecosystem_depthzone"  ] <- "donor_depthzone"                              
+colnames(ydata)[colnames(ydata) == "donor_geomorphic_unit"  ] <- "donor_geom"                                       
+colnames(ydata)[colnames(ydata) == "Donor.ecosystem.substrate"  ] <- "donor_substrate"  
+colnames(ydata)[colnames(ydata) == "Donor.ecosystem...table.2.classification"  ] <- "donor_class"
+colnames(ydata)[colnames(ydata) == "Donor.ecosystem...other.classification"  ] <- "donor_other_class"
+colnames(ydata)[colnames(ydata) == "Donor.ecosystem.depth..m."   ] <- "donor_depth"
+colnames(ydata)[colnames(ydata) == "Material.s..category"   ] <- "material_class" 
+colnames(ydata)[colnames(ydata) == "Material.s....additional.classifications"   ] <- "material_other_cat"    
+colnames(ydata)[colnames(ydata) == "Mechanism.of.connectivity"   ] <- "mech_conn" 
+colnames(ydata)[colnames(ydata) == "Mechanism.of.connectivity.assumed."    ] <- "mech_conn_ass"  
+colnames(ydata)[colnames(ydata) == "Active.or.passive"    ] <- "act_pass"  
+colnames(ydata)[colnames(ydata) == "If.available..provide.the.maximum.distance.materials.were.observed.to.have.moved..meters."    ] <- "distance"  
+colnames(ydata)[colnames(ydata) == "Connectivity.description"    ] <- "conn_desc"                               
+colnames(ydata)[colnames(ydata) == "Human.influence.on.connectivity..Y..N..or.not.specified"    ] <- "human_inf" 
+"Notes"                                                                                    
+"donor_ecosystem_depthzon"                                                                 
+"Connectivity.comparisons.yn"
+```
 
 
+ok now write  new csv
+
+```{r}
+write.csv(ydata, file = "./data/all_yes_studies_clean.csv", row.names = FALSE)
+```
 
