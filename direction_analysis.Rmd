@@ -1255,7 +1255,8 @@ colnames(ydata)
 ```{r}
 colnames(ydata)[colnames(ydata) == "Include..Y..N..M"] <- "inc"                                                         
 colnames(ydata)[colnames(ydata) == "If.excluding..reason.for.exclusion" ] <- "exclusion_reason"  
-colnames(ydata)[colnames(ydata) == "From.original.search..Y.or.N" ] <- "original_search"                                 colnames(ydata)[colnames(ydata) == "Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem" ] <- "focus"                           
+colnames(ydata)[colnames(ydata) == "From.original.search..Y.or.N" ] <- "original_search"    
+colnames(ydata)[colnames(ydata) == "Focus.on.subsidy..community..subsidy...community..or.subsidy...ecosystem" ] <- "focus" 
 colnames(ydata)[colnames(ydata) == "Specific.Methodology.Used" ] <- "method"
 colnames(ydata)[colnames(ydata) == "Measured.variable.s...include.one.line.for.each.variable."  ] <- "measured_variable"
 colnames(ydata)[colnames(ydata) == "Unit.of.measured.variable"  ] <- "measured_variable_unit"                           
@@ -1279,9 +1280,6 @@ colnames(ydata)[colnames(ydata) == "Active.or.passive"    ] <- "act_pass"
 colnames(ydata)[colnames(ydata) == "If.available..provide.the.maximum.distance.materials.were.observed.to.have.moved..meters."    ] <- "distance"  
 colnames(ydata)[colnames(ydata) == "Connectivity.description"    ] <- "conn_desc"                               
 colnames(ydata)[colnames(ydata) == "Human.influence.on.connectivity..Y..N..or.not.specified"    ] <- "human_inf" 
-"Notes"                                                                                    
-"donor_ecosystem_depthzon"                                                                 
-"Connectivity.comparisons.yn"
 ```
 
 
